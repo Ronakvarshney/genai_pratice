@@ -4,8 +4,11 @@ from langchain_groq import ChatGroq
 from langchain_core.messages import BaseMessage , HumanMessage
 from langgraph.graph.message import add_messages
 from langgraph.checkpoint.memory import InMemorySaver
+import os
 
+from dotenv import load_dotenv
 
+load_dotenv()
 
 
 class ChatHistory(TypedDict):
@@ -14,7 +17,7 @@ class ChatHistory(TypedDict):
 
 llm = ChatGroq(
     model="llama-3.3-70b-versatile",
-    api_key="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",
+    api_key=os.getenv('GROQ_API_KEY'),
     temperature=0.6
 )
 
