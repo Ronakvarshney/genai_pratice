@@ -8,7 +8,7 @@ from langgraph.checkpoint.sqlite import SqliteSaver
 from config import llm
 import sqlite3
 
-config = {"configurable": {"thread_id": "1234"}}
+config = {"configurable": {"thread_id": "123"}}
 conn = sqlite3.connect(database="rag.db", check_same_thread=False)
 checkpointer = SqliteSaver(conn=conn)
 

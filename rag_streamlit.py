@@ -24,23 +24,29 @@ if file_input:
     retriever = create_retriever(file_path)
 
     st.success("Uploaded!")
+
         
     
 if 'chats' not in st.session_state:
     st.session_state.chats = []   
+    
 
+for chat in st.session_state.chats:
+    with st.chat_message(chat["role"]):
+        st.write(chat["content"])
+        
 input_data = st.chat_input("Enter your thoughts to ask..")
 if input_data:
     with st.chat_message('user'):
         st.write(input_data)
+        st.session_state.chats.append({"role" : "user" , "content" : input_data})
     
-    st.session_state.chats.append(input_data)
     
     with st.chat_message('assistant'):
         
         chatbot = build_graph(retriever)
         
         response = chatbot.invoke({"messages" : HumanMessage(content=input_data) } , config=config)
-        st.write(response)
+        st.write(response['messages'][-1].content)
+        st.session_state.chats.append({"role" : "assistant" , "content" : response['messages'][-1].content})
         
-        st.session_state.chats.append(response)
